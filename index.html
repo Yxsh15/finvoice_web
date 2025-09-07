@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinVoice - AI-Powered Financial Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Slate 900 */
+            color: #F8FAFC; /* Slate 50 */
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #34D399, #60A5FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5); /* Slate 800 with 50% opacity */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 65, 85, 0.5); /* Slate 700 with 50% opacity */
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(52, 211, 153, 0.2), 0 4px 6px -2px rgba(52, 211, 153, 0.1);
+        }
+        /* Animation for elements on scroll */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Financial Score Gauge */
+        .score-circle {
+            stroke-dasharray: 283; /* 2 * PI * 45 */
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1.5s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-sm border-b border-slate-700/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v3a2 2 0 01-2 2H4a2 2 0 01-2-2v-3z" clip-rule="evenodd" />
+                </svg>
+                FinVoice
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-slate-300 hover:text-emerald-400 transition">Features</a>
+                <a href="#demo" class="text-slate-300 hover:text-emerald-400 transition">Demo</a>
+                <a href="#planner" class="text-slate-300 hover:text-emerald-400 transition">Planner</a>
+                <a href="#game" class="text-slate-300 hover:text-emerald-400 transition">Game</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-slate-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#features" class="block py-2 text-slate-300 hover:text-emerald-400">Features</a>
+             <a href="#demo" class="block py-2 text-slate-300 hover:text-emerald-400">Demo</a>
+             <a href="#planner" class="block py-2 text-slate-300 hover:text-emerald-400">Planner</a>
+             <a href="#game" class="block py-2 text-slate-300 hover:text-emerald-400">Game</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+            <div class="absolute inset-0 bg-grid-slate-700/20 [mask-image:linear-gradient(to_bottom,white_20%,transparent_100%)]"></div>
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+                    Your Personal AI Finance Guru.
+                    <br>
+                    <span class="gradient-text">Just a Voice Away.</span>
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-300 mb-8">
+                    Effortlessly manage your expenses, get personalized insights, and achieve your financial goals with the power of your voice.
+                </p>
+                <div class="mt-12 relative fade-in-up">
+                    <div class="absolute -inset-2 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-400 opacity-20 blur-xl"></div>
+                    <!-- Mockup of the app -->
+                    <img src="https://placehold.co/1000x550/0F172A/34D399?text=FinVoice+Dashboard+UI" alt="FinVoice App Dashboard" class="relative rounded-xl shadow-2xl mx-auto border-4 border-slate-700">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">A Smarter Way to Manage Your Money</h2>
+                    <p class="mt-4 text-lg text-slate-400">Everything you need for complete financial clarity.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1: Voice-to-Expense Logger -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                        <div class="bg-emerald-500/10 text-emerald-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Voice-to-Expense Logger</h3>
+                        <p class="text-slate-400">Say “Add dinner 300” and let our speech-to-text AI instantly categorize and log the expense. Reduces friction, fun to demo.</p>
+                    </div>
+                    <!-- Feature 2: Advisory Chatbot -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                         <div class="bg-blue-500/10 text-blue-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Advisory Chatbot</h3>
+                        <p class="text-slate-400">Ask “How can I save more?” and our LLM-powered bot suggests cutbacks and investment options tailored to you.</p>
+                    </div>
+                    <!-- Feature 3: Charts & Visualization -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                         <div class="bg-purple-500/10 text-purple-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Charts & Visualization</h3>
+                        <p class="text-slate-400">Get a clear picture with pie charts for category breakdowns, line charts for monthly trends, and goal progress bars.</p>
+                    </div>
+                    <!-- Feature 4: Smart Alerts -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                         <div class="bg-yellow-500/10 text-yellow-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Smart Alerts</h3>
+                        <p class="text-slate-400">Receive overspending alerts, goal nudges, and bill reminders to stay on top of your finances effortlessly.</p>
+                    </div>
+                    <!-- Feature 5: Bill & Subscription Tracker -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                        <div class="bg-red-500/10 text-red-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Bill & Subscription Tracker</h3>
+                        <p class="text-slate-400">Add recurring payments like Netflix or your gym membership. Get smart reminders before due dates to avoid late fees.</p>
+                    </div>
+                     <!-- Feature 6: Bank-Grade Security -->
+                    <div class="glass-card p-8 rounded-xl fade-in-up">
+                        <div class="bg-indigo-500/10 text-indigo-400 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Bank-Grade Security</h3>
+                        <p class="text-slate-400">Your data is your own. We use state-of-the-art encryption to keep your financial information safe and private.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Score Section -->
+        <section id="financial-score" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 text-center lg:text-left fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Your Financial Health, Simplified.</h2>
+                    <p class="text-lg text-slate-400 mb-6">Get your Financial Score—a single number from 0-100 that shows your financial well-being. It gamifies finance like a credit score, but is simpler to understand and improve. Based on your savings rate, spending habits, recurring bills, and goal progress.</p>
+                </div>
+                <div class="lg:w-1/2 flex justify-center fade-in-up" style="transition-delay: 200ms;">
+                    <div class="relative w-64 h-64">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <!-- Background circle -->
+                            <circle class="text-slate-700" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" />
+                            <!-- Progress circle -->
+                            <circle id="score-circle-indicator" class="text-emerald-400 score-circle" stroke-width="10" stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="score-text" class="text-5xl font-bold gradient-text">82</span>
+                            <span class="text-slate-400 font-medium">Excellent</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MoneyRun Game Section -->
+        <section id="game" class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Make Saving Fun with MoneyRun 🎮</h2>
+                    <p class="mt-4 text-lg text-slate-400 max-w-3xl mx-auto">Visualize your financial journey with our Mario-style side-scroller. Your avatar runs towards a goal, collecting savings coins and dodging overspending temptations like gadgets and expensive dinners.</p>
+                </div>
+                <div class="fade-in-up">
+                     <div class="relative">
+                        <div class="absolute -inset-2 rounded-xl bg-gradient-to-r from-purple-500 to-red-500 opacity-20 blur-xl"></div>
+                        <img src="https://placehold.co/1000x500/1E293B/FFFFFF?text=MoneyRun+Game+Screenshot" alt="MoneyRun Game" class="relative rounded-xl shadow-2xl mx-auto border-4 border-slate-700">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Demo Flow Section -->
+        <section id="demo" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Simple, Seamless, Smart.</h2>
+                    <p class="mt-4 text-lg text-slate-400">See FinVoice in action. From speaking to saving in seconds.</p>
+                </div>
+                <div class="relative">
+                    <!-- The connecting line -->
+                    <div class="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-700 -translate-y-1/2"></div>
+                    <div class="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-500 to-blue-500 -translate-y-1/2" style="clip-path: polygon(0 0, 85% 0, 85% 100%, 0% 100%);"></div>
+                    
+                    <div class="relative flex flex-col lg:flex-row justify-between items-center space-y-12 lg:space-y-0">
+                        <!-- Step 1 -->
+                        <div class="text-center w-64 fade-in-up">
+                            <div class="relative mb-4 inline-block">
+                               <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-emerald-500 flex items-center justify-center text-emerald-400">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a1 1 0 011-1h14a1 1 0 110 2H3a1 1 0 01-1-1z" /></svg>
+                               </div>
+                            </div>
+                            <h3 class="font-bold text-lg">1. You Speak</h3>
+                            <p class="text-slate-400 text-sm">Say your expense out loud. It feels like magic.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="text-center w-64 fade-in-up" style="transition-delay: 200ms;">
+                            <div class="relative mb-4 inline-block">
+                               <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-emerald-500 flex items-center justify-center text-emerald-400">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.532 1.532 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.532 1.532 0 01-.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
+                               </div>
+                            </div>
+                            <h3 class="font-bold text-lg">2. AI Processes</h3>
+                            <p class="text-slate-400 text-sm">Speech is converted to text and logged instantly.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="text-center w-64 fade-in-up" style="transition-delay: 400ms;">
+                            <div class="relative mb-4 inline-block">
+                               <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-emerald-500 flex items-center justify-center text-emerald-400">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>
+                               </div>
+                            </div>
+                            <h3 class="font-bold text-lg">3. Chart Updates</h3>
+                            <p class="text-slate-400 text-sm">Your dashboard reflects the new entry in real-time.</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="text-center w-64 fade-in-up" style="transition-delay: 600ms;">
+                            <div class="relative mb-4 inline-block">
+                               <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-emerald-500 flex items-center justify-center text-emerald-400">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+                               </div>
+                            </div>
+                            <h3 class="font-bold text-lg">4. AI Suggests</h3>
+                            <p class="text-slate-400 text-sm">Receive smart tips to optimize your spending and saving.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="mt-16 text-center glass-card p-6 rounded-lg max-w-3xl mx-auto fade-in-up" style="transition-delay: 800ms;">
+                    <p class="text-lg text-slate-300">"Reduce dining by <span class="font-bold text-emerald-400">10%</span>, and redirect that to your SIP to meet your <span class="font-bold text-blue-400">car goal</span> faster."</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Goal Planner Section -->
+        <section id="planner" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2 fade-in-up">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Plan Your Future, Today.</h2>
+                        <p class="text-lg text-slate-400 mb-6">Set a goal like “Buy a Car in 12 months” and FinVoice will suggest a SIP or savings target with projections. Watch the progress bar fill as you get closer to your dream.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-emerald-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span>Set tangible goals with target dates and amounts.</span>
+                            </div>
+                             <div class="flex items-start">
+                                <svg class="w-6 h-6 text-emerald-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span>Receive AI-recommended SIP plans and investment options.</span>
+                            </div>
+                             <div class="flex items-start">
+                                <svg class="w-6 h-6 text-emerald-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span>Track your progress with projected returns and milestone alerts.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 fade-in-up" style="transition-delay: 200ms;">
+                        <div class="glass-card p-6 rounded-xl shadow-lg border-2 border-slate-700">
+                           <h4 class="font-bold text-lg mb-4 text-center">Goal: Buy a Car 🚗</h4>
+                           <div class="space-y-4">
+                               <div>
+                                   <div class="flex justify-between mb-1">
+                                       <span class="text-sm font-medium text-slate-300">Progress</span>
+                                       <span class="text-sm font-medium text-emerald-400">45%</span>
+                                   </div>
+                                   <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                     <div class="bg-gradient-to-r from-emerald-500 to-blue-500 h-2.5 rounded-full" style="width: 45%"></div>
+                                   </div>
+                               </div>
+                               <div class="grid grid-cols-2 gap-4 text-center">
+                                   <div class="bg-slate-800/50 p-3 rounded-lg">
+                                       <div class="text-sm text-slate-400">Target</div>
+                                       <div class="font-bold text-xl">₹8,00,000</div>
+                                   </div>
+                                    <div class="bg-slate-800/50 p-3 rounded-lg">
+                                       <div class="text-sm text-slate-400">Saved</div>
+                                       <div class="font-bold text-xl">₹3,60,000</div>
+                                   </div>
+                               </div>
+                               <div class="bg-slate-800/50 p-4 rounded-lg">
+                                    <p class="text-sm text-center text-slate-300">
+                                       Suggested Savings: <span class="font-bold text-white text-base">₹18,500/month</span>
+                                       <br>
+                                       Projected Completion: <span class="font-bold text-white text-base">Sep 2026</span>
+                                    </p>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="text-slate-400">&copy; 2025 FinVoice. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-slate-400 hover:text-white transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Special handling for the score circle
+                    if(entry.target.id === 'financial-score') {
+                        animateScore(82);
+                    }
+                }
+            });
+        }, {
+            threshold: 0.3 // Trigger when 30% of the element is visible
+        });
+
+        const fadeUpElements = document.querySelectorAll('.fade-in-up');
+        fadeUpElements.forEach(el => observer.observe(el));
+        
+        // Observe the financial score section specifically for animation
+        const scoreSection = document.getElementById('financial-score');
+        if(scoreSection) {
+            observer.observe(scoreSection);
+        }
+
+        // Financial Score Animation
+        function animateScore(finalScore) {
+            const circle = document.getElementById('score-circle-indicator');
+            const scoreText = document.getElementById('score-text');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            
+            const offset = circumference - (finalScore / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            let currentScore = 0;
+            const interval = setInterval(() => {
+                if (currentScore >= finalScore) {
+                    clearInterval(interval);
+                    scoreText.textContent = finalScore;
+                    return;
+                }
+                currentScore++;
+                scoreText.textContent = currentScore;
+            }, 15);
+        }
+
+    </script>
+</body>
+</html>
+
+
